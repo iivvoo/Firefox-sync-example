@@ -31,7 +31,6 @@ class SyncSample(object):
         
     def get(self, path):
         url = '/'.join((self.node, self.api, self.username, path))
-        print url
         r = requests.get(url, auth=(self.username, self._password))
         return json.loads(r.read())
 

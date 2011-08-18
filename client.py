@@ -69,8 +69,12 @@ class SyncSample(object):
         return d 
 
     def passwords(self):
-        d = self.get("storage/passwords")
-        return d 
+        d = self.get("storage/passwords?full=1")
+        res = []
+        for p in d:
+            payload = json.loads(p['payload'])
+            res.append( self.decrypt(payload))
+        return res
 
     def bookmark(self, id):
         # url = "storage/bookmarks?ids=%s" % urllib.quote(','.join(ids))
@@ -111,7 +115,8 @@ if __name__ == '__main__':
 
     import pprint
     pprint.pprint(meta)
-    ids = s.bookmarks()
-    for id in ids[:3]:
-        pprint.pprint(s.bookmark(id))
-
+    # ids = s.bookmarks()
+    # for id in ids[:3]:
+    #     pprint.pprint(s.bookmark(id))
+    passwords = s.passwords()
+    pprint.pprint(passwords)
